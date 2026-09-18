@@ -51,10 +51,12 @@ export const ScanPage: React.FC = () => {
   };
 
   const scanFrame = () => {
-    if (videoRef.current && videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current || document.createElement('canvas');
-      canvasRef.current = canvas;
+    const video = videoRef.current;
+    if (video && video.readyState >= 2 && video.videoWidth > 0 && video.videoHeight > 0) {
+      if (!canvasRef.current) {
+        canvasRef.current = document.createElement('canvas');
+      }
+      const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
       if (ctx) {
@@ -64,7 +66,7 @@ export const ScanPage: React.FC = () => {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: 'dontInvert'
+          inversionAttempts: 'attemptBoth'
         });
 
         if (code && code.data) {
@@ -89,18 +91,26 @@ export const ScanPage: React.FC = () => {
           video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
         });
         streamRef.current = stream;
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-        }
         setCameraActive(true);
+        
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play().catch(() => {});
+          }
+        }, 50);
+
+        if (animFrameRef.current) {
+          cancelAnimationFrame(animFrameRef.current);
+        }
         animFrameRef.current = requestAnimationFrame(scanFrame);
       } else {
-        setCameraError('Camera API not supported on this browser. Use presets or upload an image.');
+        setCameraError('Camera API not supported on this browser. Select a certificate preset or upload an image.');
+        setCameraActive(false);
       }
     } catch (err: any) {
       console.warn('Camera access denied or unavailable:', err);
-      setCameraError('Camera permission denied or device camera unavailable. Use presets or image upload below.');
+      setCameraError('Camera access unavailable on this device/browser. Select a certificate preset below or upload an image.');
       setCameraActive(false);
     }
   };
@@ -131,18 +141,38 @@ export const ScanPage: React.FC = () => {
       reader.onload = (event) => {
         const img = new Image();
         img.onload = () => {
+          const maxDim = 1000;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
           const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
           if (ctx) {
-            ctx.drawImage(img, 0, 0);
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
+            ctx.drawImage(img, 0, 0, width, height);
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+              inversionAttempts: 'attemptBoth'
+            });
+
             if (code && code.data) {
               handleDetectedCode(code.data);
             } else {
-              // Fallback default sample certificate
+              addToast({
+                type: 'error',
+                title: 'No QR Code Detected in Image',
+                description: 'Could not decode QR seal from image. Decoding sample certificate IMP-MH-162-2026.'
+              });
               handleDetectedCode('IMP-MH-162-2026');
             }
           }
@@ -174,18 +204,24 @@ export const ScanPage: React.FC = () => {
 
         {/* Viewfinder Frame with Live Video & Recognition Grid Overlay */}
         <div className="relative w-80 h-80 sm:w-96 sm:h-96 mx-auto bg-slate-900 rounded-3xl border-2 border-slate-700 p-2 shadow-2xl flex items-center justify-center overflow-hidden">
-          
-          {cameraActive ? (
-            <video
-              ref={videoRef}
-              playsInline
-              muted
-              className="w-full h-full object-cover rounded-2xl"
-            />
-          ) : (
-            <div className="opacity-40 flex flex-col items-center space-y-3 p-4">
-              <QrCode className="w-24 h-24 text-slate-500 animate-pulse" />
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className={`w-full h-full object-cover rounded-2xl ${cameraActive && !scanSuccess ? 'block' : 'hidden'}`}
+          />
+
+          {!cameraActive && !scanSuccess && (
+            <div className="opacity-50 flex flex-col items-center space-y-3 p-4 text-center">
+              <QrCode className="w-20 h-20 text-slate-500 animate-pulse" />
               <span className="text-xs text-slate-400 font-mono">Webcam Scanner Standby</span>
+              <button
+                onClick={startCamera}
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md transition"
+              >
+                Start Camera Stream
+              </button>
             </div>
           )}
 

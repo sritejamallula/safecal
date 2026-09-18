@@ -15,10 +15,11 @@ export const QRCodeCard: React.FC<QRCodeCardProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  // Ensure target URL encodes ONLY the verification URL format
+  // Ensure target URL encodes ONLY the verification URL format with HashRouter support
+  const pathPrefix = window.location.pathname.endsWith('/') ? window.location.pathname : `${window.location.pathname}/`;
   const qrUrl = value.startsWith('http')
     ? value
-    : `${window.location.origin}/verify/${encodeURIComponent(value)}`;
+    : `${window.location.origin}${pathPrefix}#/verify/${encodeURIComponent(value)}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(qrUrl);
