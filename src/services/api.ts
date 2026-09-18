@@ -8,16 +8,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 export const fetchVerificationRecord = async (query: string): Promise<Instrument | null> => {
   const cleanQuery = query ? query.trim() : '';
   if (!cleanQuery) return null;
-  try {
-    const res = await fetch(`${API_BASE_URL}/verification/${encodeURIComponent(cleanQuery)}`);
-    const json = await res.json();
-    if (res.ok && json.success && json.data) {
-      return json.data;
-    }
-  } catch (err) {
-    console.warn('Error fetching verification record from API:', err);
-  }
-  return null;
+  const result = await apiService.verifyInstrumentOrCertificate(cleanQuery);
+  return result.found && result.instrument ? result.instrument : null;
 };
 
 // Centralized Backend API Client
@@ -38,43 +30,44 @@ export const apiService = {
     try {
       // Primary Backend API Query
       const res = await fetch(`${API_BASE_URL}/verification/${encodeURIComponent(cleanQuery)}`);
-      const json = await res.json();
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && json.data) {
+          const inst: Instrument = json.data;
+          const cert: Certificate = {
+            certificateNumber: inst.certificateNumber,
+            instrumentId: inst.verificationId || inst.id,
+            verificationId: inst.verificationId,
+            instrumentType: inst.instrumentType,
+            manufacturer: `${inst.manufacturer} (${inst.model})`,
+            serialNumber: inst.serialNumber,
+            businessName: inst.businessName,
+            businessAddress: inst.businessAddress,
+            district: inst.district,
+            state: inst.state,
+            issueDate: inst.verificationDate ? new Date(inst.verificationDate).toLocaleDateString('en-GB') : 'N/A',
+            validUntil: inst.validUntil ? new Date(inst.validUntil).toLocaleDateString('en-GB') : 'N/A',
+            inspectorName: inst.inspectorName || 'Shri R. V. Rao',
+            inspectorId: inst.inspectorId || 'INS-AP-04',
+            status: inst.verificationStatus === 'VERIFIED' ? 'VALID' : 'EXPIRED',
+            qrCodeUrl: inst.qrVerificationUrl,
+            sealId: `SEAL-LM-${inst.serialNumber.slice(-5)}`,
+            sourceType: inst.sourceType,
+            sourceReference: inst.sourceReference
+          };
 
-      if (res.ok && json.success && json.data) {
-        const inst: Instrument = json.data;
-        const cert: Certificate = {
-          certificateNumber: inst.certificateNumber,
-          instrumentId: inst.verificationId || inst.id,
-          verificationId: inst.verificationId,
-          instrumentType: inst.instrumentType,
-          manufacturer: `${inst.manufacturer} (${inst.model})`,
-          serialNumber: inst.serialNumber,
-          businessName: inst.businessName,
-          businessAddress: inst.businessAddress,
-          district: inst.district,
-          state: inst.state,
-          issueDate: inst.verificationDate ? new Date(inst.verificationDate).toLocaleDateString('en-GB') : 'N/A',
-          validUntil: inst.validUntil ? new Date(inst.validUntil).toLocaleDateString('en-GB') : 'N/A',
-          inspectorName: inst.inspectorName || 'Shri R. V. Rao',
-          inspectorId: inst.inspectorId || 'INS-AP-04',
-          status: inst.verificationStatus === 'VERIFIED' ? 'VALID' : 'EXPIRED',
-          qrCodeUrl: inst.qrVerificationUrl,
-          sealId: `SEAL-LM-${inst.serialNumber.slice(-5)}`,
-          sourceType: inst.sourceType,
-          sourceReference: inst.sourceReference
-        };
+          if (inst.verificationStatus === 'EXPIRED') {
+            return { found: true, instrument: inst, certificate: cert, errorType: 'EXPIRED', message: 'Verification certificate for this instrument has EXPIRED.' };
+          }
+          if (inst.verificationStatus === 'REJECTED') {
+            return { found: true, instrument: inst, errorType: 'REJECTED', message: 'Instrument failed legal metrology accuracy standards and has been REJECTED.' };
+          }
+          if (inst.verificationStatus === 'PENDING') {
+            return { found: true, instrument: inst, errorType: 'PENDING', message: 'Instrument inspection is currently PENDING inspector review.' };
+          }
 
-        if (inst.verificationStatus === 'EXPIRED') {
-          return { found: true, instrument: inst, certificate: cert, errorType: 'EXPIRED', message: 'Verification certificate for this instrument has EXPIRED.' };
+          return { found: true, instrument: inst, certificate: cert };
         }
-        if (inst.verificationStatus === 'REJECTED') {
-          return { found: true, instrument: inst, errorType: 'REJECTED', message: 'Instrument failed legal metrology accuracy standards and has been REJECTED.' };
-        }
-        if (inst.verificationStatus === 'PENDING') {
-          return { found: true, instrument: inst, errorType: 'PENDING', message: 'Instrument inspection is currently PENDING inspector review.' };
-        }
-
-        return { found: true, instrument: inst, certificate: cert };
       }
     } catch (err) {
       console.warn('Backend API unreachable, using local storage fallback:', err);
@@ -83,7 +76,33 @@ export const apiService = {
     // Local Storage Fallback if server offline
     const instruments = getStoredInstruments();
     const certs = getStoredCertificates();
-    const inst = instruments.find(i => i.verificationId?.toUpperCase() === cleanQuery.toUpperCase() || i.id.toUpperCase() === cleanQuery.toUpperCase() || i.certificateNumber?.toUpperCase() === cleanQuery.toUpperCase() || i.serialNumber.toUpperCase() === cleanQuery.toUpperCase());
+    const cleanUpper = cleanQuery.toUpperCase();
+    const cleanNorm = cleanQuery.replace(/[\/\s\_]/g, '-').toUpperCase();
+
+    const inst = instruments.find(i => {
+      const vid = (i.verificationId || '').toUpperCase();
+      const id = (i.id || '').toUpperCase();
+      const certNo = (i.certificateNumber || '').toUpperCase();
+      const regNo = (i.registrationNo || '').toUpperCase();
+      const serialNo = (i.serialNumber || '').toUpperCase();
+      const owner = (i.ownerName || i.importerName || i.businessName || '').toUpperCase();
+
+      const vidNorm = vid.replace(/[\/\s\_]/g, '-');
+      const certNorm = certNo.replace(/[\/\s\_]/g, '-');
+      const regNorm = regNo.replace(/[\/\s\_]/g, '-');
+
+      return (
+        vid === cleanUpper ||
+        id === cleanUpper ||
+        certNo === cleanUpper ||
+        regNo === cleanUpper ||
+        serialNo === cleanUpper ||
+        vidNorm === cleanNorm ||
+        certNorm === cleanNorm ||
+        regNorm === cleanNorm ||
+        (cleanUpper.length >= 3 && owner.includes(cleanUpper))
+      );
+    });
 
     if (inst) {
       const cert = certs.find(c => c.certificateNumber === inst.certificateNumber || c.instrumentId === inst.verificationId || c.instrumentId === inst.id);
