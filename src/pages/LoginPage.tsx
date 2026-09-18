@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
 import { Shield, Lock, Store, ClipboardCheck, UserCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { SafeCalLogo } from '../components/common/SafeCalLogo';
 
 export const LoginPage: React.FC = () => {
   const { loginAsDemoRole } = useAuth();
@@ -45,14 +46,8 @@ export const LoginPage: React.FC = () => {
         {/* Left Branding Side (5 cols) */}
         <div className="md:col-span-5 bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 p-8 text-white flex flex-col justify-between">
           <div>
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-md">
-                S
-              </div>
-              <div>
-                <h3 className="font-extrabold text-lg leading-none font-sans">SafeCal</h3>
-                <span className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Legal Verification</span>
-              </div>
+            <div className="mb-6">
+              <SafeCalLogo size={42} showText={true} variant="light" />
             </div>
 
             <h2 className="text-2xl font-black tracking-tight leading-snug mb-3">
@@ -80,7 +75,7 @@ export const LoginPage: React.FC = () => {
           
           <div>
             <h3 className="text-xl font-black text-slate-900">Sign In to Your Account</h3>
-            <p className="text-xs text-slate-500 mt-1">Select your stakeholder role to populate demo credentials:</p>
+            <p className="text-xs text-slate-500 mt-1">Select your stakeholder role to access portal services:</p>
           </div>
 
           {/* Role Selection Tabs */}

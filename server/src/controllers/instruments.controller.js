@@ -36,8 +36,8 @@ export const createInstrument = async (req, res) => {
     const body = req.body;
     const count = await prisma.instrument.count();
     const nextNum = String(count + 1).padStart(6, '0');
-    const verificationId = `LM-AP-DEMO-${nextNum}`;
-    const certificateNumber = `CERT-DEMO-2026-${nextNum}`;
+    const verificationId = `LM-USER-${nextNum}`;
+    const certificateNumber = `IMP/REG/2026/${String(count + 1).padStart(4, '0')}`;
 
     const newInst = await prisma.instrument.create({
       data: {
@@ -58,8 +58,8 @@ export const createInstrument = async (req, res) => {
         inspectorName: body.inspectorName || 'Assigned to Inspector Shri R. V. Rao',
         inspectorId: 'INS-AP-04',
         qrVerificationUrl: `http://localhost:3000/verify/${verificationId}`,
-        sourceType: 'DEMO',
-        sourceReference: 'Hackathon Demo Dataset — User Submitted Record'
+        sourceType: 'USER_SUBMISSION',
+        sourceReference: 'Portal Establishment Submission'
       }
     });
 

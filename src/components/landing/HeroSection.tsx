@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, QrCode, ShieldCheck, CheckCircle2, ArrowRight, Building2 } from 'lucide-react';
 
+import { SafeCalLogo } from '../common/SafeCalLogo';
+
 export const HeroSection: React.FC = () => {
   const navigate = useNavigate();
 
@@ -78,15 +80,7 @@ export const HeroSection: React.FC = () => {
               <div className="relative bg-white text-slate-900 rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4">
                 
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <div className="flex items-center space-x-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-blue-900 flex items-center justify-center text-white font-black text-sm">
-                      S
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-black text-slate-900">SafeCal Certificate</h4>
-                      <p className="text-[10px] font-bold text-slate-500">Legal Verification</p>
-                    </div>
-                  </div>
+                  <SafeCalLogo size={32} showText={true} />
                   <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-[11px] font-black flex items-center">
                     <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-emerald-600" />
                     VERIFIED

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import { ToastProvider } from './context/ToastContext';
@@ -63,7 +63,7 @@ export function App() {
     <AuthProvider>
       <ToastProvider>
         <DataProvider>
-          <BrowserRouter>
+          <HashRouter>
             <AppLayout>
               <Routes>
                 {/* Public Routes */}
@@ -98,7 +98,7 @@ export function App() {
                 <Route path="*" element={<LandingPage />} />
               </Routes>
             </AppLayout>
-          </BrowserRouter>
+          </HashRouter>
         </DataProvider>
       </ToastProvider>
     </AuthProvider>

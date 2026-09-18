@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Scale } from 'lucide-react';
+import { SafeCalLogo } from './SafeCalLogo';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,12 +11,7 @@ export const Footer: React.FC = () => {
           
           {/* Brand Column */}
           <div className="md:col-span-1 space-y-3">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
-                S
-              </div>
-              <span className="font-extrabold text-white text-lg tracking-tight">SafeCal</span>
-            </div>
+            <SafeCalLogo size={36} showText={true} variant="light" />
             <p className="text-slate-400 text-xs leading-relaxed">
               SafeCal Statutory Verification Portal for Weighing and Measuring Instruments certified under Legal Metrology Regulations.
             </p>

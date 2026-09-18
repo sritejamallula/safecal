@@ -4,6 +4,8 @@ import { QRCodeCard } from '../common/QRCodeCard';
 import { Printer, Download, Share2, ShieldCheck, Building2, Calendar, FileText } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 
+import { SafeCalLogo } from '../common/SafeCalLogo';
+
 interface CertificateCardProps {
   instrument: Instrument;
 }
@@ -87,10 +89,8 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({ instrument }) 
 
         {/* Certificate Header */}
         <div className="text-center border-b border-slate-200 pb-6 space-y-2 relative z-10">
-          <div className="flex justify-center items-center space-x-2 mb-2">
-            <div className="w-12 h-12 rounded-xl bg-blue-950 text-white flex items-center justify-center font-black text-2xl shadow-md">
-              S
-            </div>
+          <div className="flex justify-center items-center mb-3">
+            <SafeCalLogo size={52} showText={false} />
           </div>
 
           <span className="text-sm font-black uppercase tracking-widest text-blue-950 block">

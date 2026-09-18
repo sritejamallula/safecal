@@ -132,8 +132,8 @@ export const apiService = {
     // Local fallback
     const instruments = getStoredInstruments();
     const count = instruments.length + 1;
-    const vId = `LM-AP-DEMO-${String(count).padStart(6, '0')}`;
-    const certNo = `CERT-DEMO-2026-${String(count).padStart(6, '0')}`;
+    const vId = `LM-USER-${String(count).padStart(6, '0')}`;
+    const certNo = `IMP/REG/2026/${String(count).padStart(4, '0')}`;
 
     const newInst: Instrument = {
       id: vId,
@@ -156,8 +156,8 @@ export const apiService = {
       inspectorName: 'Shri R. V. Rao',
       inspectorId: 'INS-AP-04',
       qrVerificationUrl: `http://localhost:3000/verify/${vId}`,
-      sourceType: 'DEMO',
-      sourceReference: 'Hackathon Demo Dataset — User Submission',
+      sourceType: 'USER_SUBMISSION',
+      sourceReference: 'Portal User Submission',
       createdAt: new Date().toISOString()
     };
 

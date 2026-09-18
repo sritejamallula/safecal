@@ -4,6 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import { QrCode, Search, Bell, Menu, X, LogOut, CheckCircle2, UserCheck, ShieldAlert } from 'lucide-react';
 
+import { SafeCalLogo } from './SafeCalLogo';
+
 export const Navbar: React.FC = () => {
   const { role, userName, logout, isAuthenticated } = useAuth();
   const { notifications, markNotificationRead } = useData();
@@ -21,22 +23,7 @@ export const Navbar: React.FC = () => {
           {/* Brand & Title */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-950 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition">
-                S
-              </div>
-              <div>
-                <div className="flex items-center space-x-1.5">
-                  <span className="font-extrabold text-slate-900 text-xl tracking-tight group-hover:text-blue-700 transition">
-                    SafeCal
-                  </span>
-                  <span className="text-[10px] uppercase font-black tracking-widest bg-blue-100 text-blue-900 px-1.5 py-0.5 rounded border border-blue-200">
-                    Legal Verification
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                  Statutory Instrument & Importer Verification Portal
-                </p>
-              </div>
+              <SafeCalLogo size={40} showText={true} />
             </Link>
           </div>
 
