@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Scale, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Scale } from 'lucide-react';
+import { IndianGovernmentEmblem } from './IndianGovernmentEmblem';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,11 +11,9 @@ export const Footer: React.FC = () => {
           
           {/* Brand Column */}
           <div className="md:col-span-1 space-y-3">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 p-1 flex items-center justify-center">
-                <img src="/logo-icon.svg" alt="Logo" className="w-full h-full" />
-              </div>
-              <span className="font-bold text-white text-base">e-LegalMetrology Portal</span>
+            <div className="flex items-center space-x-3">
+              <IndianGovernmentEmblem size={36} showText={false} />
+              <span className="font-bold text-white text-base font-serif">Legal Metrology Portal</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
               Official Verification Portal for Weighing and Measuring Instruments certified under the Legal Metrology Act, 2009.

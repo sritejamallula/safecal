@@ -4,6 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import { QrCode, Search, Bell, Menu, X, LogOut, CheckCircle2, UserCheck, ShieldAlert } from 'lucide-react';
 
+import { IndianGovernmentEmblem } from './IndianGovernmentEmblem';
+
 export const Navbar: React.FC = () => {
   const { role, userName, logout, isAuthenticated } = useAuth();
   const { notifications, markNotificationRead } = useData();
@@ -18,22 +20,20 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           
-          {/* Logo & Brand */}
+          {/* Brand & State Emblem */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 p-0.5 shadow-md flex items-center justify-center transform group-hover:scale-105 transition">
-                <img src="/logo-icon.svg" alt="e-Verify Logo" className="w-full h-full rounded-lg" />
-              </div>
+              <IndianGovernmentEmblem size={38} showText={false} />
               <div>
                 <div className="flex items-center space-x-1.5">
-                  <span className="font-extrabold text-slate-900 text-lg tracking-tight group-hover:text-blue-700 transition">
-                    e-Verify
-                  </span>
-                  <span className="text-[10px] uppercase font-bold tracking-widest bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded border border-blue-200">
+                  <span className="font-extrabold text-slate-900 text-lg tracking-tight group-hover:text-blue-700 transition font-serif">
                     Legal Metrology
                   </span>
+                  <span className="text-[10px] uppercase font-extrabold tracking-widest bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded border border-amber-300">
+                    Government of India
+                  </span>
                 </div>
-                <p className="text-[11px] text-slate-500 hidden sm:block">
+                <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
                   Department of Consumer Affairs • Verification Portal
                 </p>
               </div>

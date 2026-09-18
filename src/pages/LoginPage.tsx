@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { IndianGovernmentEmblem } from '../components/common/IndianGovernmentEmblem';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
@@ -46,12 +46,10 @@ export const LoginPage: React.FC = () => {
         <div className="md:col-span-5 bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 p-8 text-white flex flex-col justify-between">
           <div>
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 p-1 flex items-center justify-center">
-                <img src="/logo-icon.svg" alt="Logo" className="w-full h-full" />
-              </div>
+              <IndianGovernmentEmblem size={42} showText={false} />
               <div>
-                <h3 className="font-extrabold text-lg leading-none">e-Verify</h3>
-                <span className="text-[10px] text-blue-300 font-bold uppercase tracking-wider">Legal Metrology</span>
+                <h3 className="font-extrabold text-lg leading-none font-serif">Legal Metrology</h3>
+                <span className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Government of India</span>
               </div>
             </div>
 
