@@ -215,7 +215,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({ instrument }) 
             <ShieldCheck className="w-3.5 h-3.5 text-blue-700 mr-1" />
             SafeCal digitally authenticated statutory registration certificate.
           </p>
-          <span className="font-mono text-slate-500">http://localhost:3000/verify/{instrument.verificationId}</span>
+          <span className="font-mono text-slate-500">{window.location.origin}{window.location.pathname}#/verify/{instrument.verificationId}</span>
         </div>
 
       </div>
