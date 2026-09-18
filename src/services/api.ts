@@ -5,8 +5,51 @@ export { getStoredInstruments, saveStoredInstruments, getStoredCertificates, sav
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+export const extractCertificateId = (rawQuery: string): string => {
+  if (!rawQuery) return '';
+  let str = rawQuery.trim();
+
+  // Try decoding up to 2 times to handle double percent-encoding
+  for (let i = 0; i < 2; i++) {
+    try {
+      if (str.includes('%')) {
+        str = decodeURIComponent(str);
+      }
+    } catch (e) {}
+  }
+
+  // 1. Check if the string contains an IMP or LM certificate pattern anywhere in the string
+  // Matches e.g. IMP/MH/161/2026, IMP-MH-161-2026, IMP/REG/2026/0001, LM-AP-DEMO-000001
+  const impMatch = str.match(/(IMP[\/|\-][A-Z0-9]{2,5}[\/|\-]\d+[\/|\-]\d{4})/i);
+  if (impMatch && impMatch[1]) {
+    return impMatch[1].trim();
+  }
+
+  const lmMatch = str.match(/(LM[\/|\-][A-Z0-9\-]{4,30})/i);
+  if (lmMatch && lmMatch[1]) {
+    return lmMatch[1].trim();
+  }
+
+  // 2. Extract value from URL query parameters (regNo=..., certNo=..., id=..., cert=...)
+  if (str.includes('regNo=')) {
+    str = str.split('regNo=')[1].split('&')[0].split('#')[0];
+  } else if (str.includes('certNo=')) {
+    str = str.split('certNo=')[1].split('&')[0].split('#')[0];
+  } else if (str.includes('id=')) {
+    str = str.split('id=')[1].split('&')[0].split('#')[0];
+  } else if (str.includes('cert=')) {
+    str = str.split('cert=')[1].split('&')[0].split('#')[0];
+  } else if (str.includes('/verify/')) {
+    str = str.split('/verify/')[1].split('&')[0].split('#')[0].split('?')[0];
+  } else if (str.includes('/certificate/')) {
+    str = str.split('/certificate/')[1].split('&')[0].split('#')[0].split('?')[0];
+  }
+
+  return str.trim();
+};
+
 export const fetchVerificationRecord = async (query: string): Promise<Instrument | null> => {
-  const cleanQuery = query ? query.trim() : '';
+  const cleanQuery = extractCertificateId(query);
   if (!cleanQuery) return null;
   const result = await apiService.verifyInstrumentOrCertificate(cleanQuery);
   return result.found && result.instrument ? result.instrument : null;
@@ -22,7 +65,8 @@ export const apiService = {
     errorType?: 'EXPIRED' | 'REJECTED' | 'NOT_FOUND' | 'PENDING';
     message?: string;
   }> {
-    const cleanQuery = query ? query.trim() : '';
+    const extracted = extractCertificateId(query);
+    const cleanQuery = extracted || (query ? query.trim() : '');
     if (!cleanQuery) {
       return { found: false, errorType: 'NOT_FOUND', message: 'Please enter a valid verification ID or certificate number.' };
     }

@@ -5,6 +5,8 @@ import jsQR from 'jsqr';
 import { useToast } from '../context/ToastContext';
 import { SafeCalLogo } from '../components/common/SafeCalLogo';
 
+import { extractCertificateId } from '../services/api';
+
 export const ScanPage: React.FC = () => {
   const [scanning, setScanning] = useState(true);
   const [scannedCode, setScannedCode] = useState<string | null>(null);
@@ -21,16 +23,7 @@ export const ScanPage: React.FC = () => {
   const { addToast } = useToast();
 
   const handleDetectedCode = (rawCode: string) => {
-    let cleanCode = rawCode.trim();
-
-    // Extract ID if a full URL was scanned (e.g. http://localhost:3000/#/verify/IMP-MH-162-2026)
-    if (cleanCode.includes('/verify/')) {
-      cleanCode = cleanCode.split('/verify/')[1].split('?')[0].split('#')[0];
-    } else if (cleanCode.includes('/certificate/')) {
-      cleanCode = cleanCode.split('/certificate/')[1].split('?')[0].split('#')[0];
-    }
-
-    cleanCode = decodeURIComponent(cleanCode).replace(/\//g, '-');
+    const cleanCode = extractCertificateId(rawCode);
 
     if (!cleanCode) return;
 
@@ -46,8 +39,8 @@ export const ScanPage: React.FC = () => {
     });
 
     setTimeout(() => {
-      navigate(`/verify/${encodeURIComponent(cleanCode)}`);
-    }, 1200);
+      navigate(`/verify/${encodeURIComponent(cleanCode.replace(/\//g, '-'))}`);
+    }, 1000);
   };
 
   const scanFrame = () => {

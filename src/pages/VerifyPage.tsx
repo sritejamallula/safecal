@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useParams, useNavigate, Link } from 'react-router-dom';
-import { apiService } from '../services/api';
+import { apiService, extractCertificateId } from '../services/api';
 import { Instrument } from '../types';
 import { VerificationCard } from '../components/verification/VerificationCard';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
@@ -11,7 +11,8 @@ export const VerifyPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const initialQuery = verificationId || searchParams.get('id') || searchParams.get('cert') || 'IMP/MH/162/2026';
+  const rawQuery = verificationId || searchParams.get('id') || searchParams.get('cert') || searchParams.get('regNo') || 'IMP/MH/162/2026';
+  const initialQuery = extractCertificateId(rawQuery) || rawQuery;
 
   const [inputQuery, setInputQuery] = useState(initialQuery);
   const [activeQuery, setActiveQuery] = useState(initialQuery);
@@ -24,12 +25,13 @@ export const VerifyPage: React.FC = () => {
   } | null>(null);
 
   const performSearch = async (queryToSearch: string) => {
-    if (!queryToSearch.trim()) return;
+    const cleanQ = extractCertificateId(queryToSearch);
+    if (!cleanQ) return;
     setLoading(true);
-    setActiveQuery(queryToSearch);
+    setActiveQuery(cleanQ);
 
     try {
-      const res = await apiService.verifyInstrumentOrCertificate(queryToSearch);
+      const res = await apiService.verifyInstrumentOrCertificate(cleanQ);
       setResult(res);
     } catch (err) {
       console.error(err);
@@ -44,15 +46,17 @@ export const VerifyPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const q = verificationId || searchParams.get('id') || searchParams.get('cert') || 'IMP/MH/162/2026';
-    setInputQuery(q);
-    performSearch(q);
+    const rawQ = verificationId || searchParams.get('id') || searchParams.get('cert') || searchParams.get('regNo') || 'IMP/MH/162/2026';
+    const cleanQ = extractCertificateId(rawQ) || rawQ;
+    setInputQuery(cleanQ);
+    performSearch(cleanQ);
   }, [verificationId, searchParams]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputQuery.trim()) {
-      navigate(`/verify/${encodeURIComponent(inputQuery.trim().replace(/\//g, '-'))}`);
+    const cleanQ = extractCertificateId(inputQuery);
+    if (cleanQ) {
+      navigate(`/verify/${encodeURIComponent(cleanQ.replace(/\//g, '-'))}`);
     }
   };
 
