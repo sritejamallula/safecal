@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeCal - Legal Verification Portal</title>
+    <script type="text/javascript">
+      // Redirect SPA routes to HashRouter
+      var path = window.location.pathname;
+      var repo = '/safecal';
+      if (path.indexOf(repo) === 0) {
+        var subpath = path.slice(repo.length);
+        if (subpath && subpath !== '/') {
+          window.location.replace(window.location.origin + repo + '/#' + subpath + window.location.search);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script>
+      window.location.replace(window.location.origin + '/safecal/#/');
+    </script>
+  </body>
+</html>
