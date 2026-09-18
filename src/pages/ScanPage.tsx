@@ -171,13 +171,16 @@ export const ScanPage: React.FC = () => {
           </label>
         </div>
 
-        {/* Portal Sample QR Triggers */}
+        {/* Portal Sample QR Triggers (10+ Authentic Certificates) */}
         <div className="bg-slate-800/80 rounded-2xl p-5 border border-slate-700/80 space-y-3 text-left">
-          <p className="text-xs font-bold text-slate-300 flex items-center">
-            <Building2 className="w-4 h-4 mr-1 text-blue-400" /> Click Sample Certificate QR to Scan:
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold text-slate-300 flex items-center">
+              <Building2 className="w-4 h-4 mr-1 text-blue-400" /> Click Any Sample Certificate QR Seal:
+            </p>
+            <span className="text-[10px] bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded font-mono">10+ Presets</span>
+          </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 max-h-80 overflow-y-auto pr-1 custom-scrollbar">
             <button
               onClick={() => handleDetectedCode('IMP-MH-162-2026')}
               className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
@@ -190,12 +193,45 @@ export const ScanPage: React.FC = () => {
             </button>
 
             <button
+              onClick={() => handleDetectedCode('IMP-MH-161-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/MH/161/2026</span>
+                <span className="text-[10px] text-blue-400 font-sans">Industrial Electronic and Allied Products</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
+              onClick={() => handleDetectedCode('IMP-MH-160-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/MH/160/2026</span>
+                <span className="text-[10px] text-amber-400 font-sans">UDEYRAJ ELECTRICALS PRIVATE LIMITED</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
               onClick={() => handleDetectedCode('IMP-MH-159-2026')}
               className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
             >
               <div>
                 <span className="font-bold text-white block">IMP/MH/159/2026</span>
-                <span className="text-[10px] text-blue-400 font-sans">SENSUS METERING INDIA PRIVATE LIMITED</span>
+                <span className="text-[10px] text-cyan-400 font-sans">SENSUS METERING INDIA PRIVATE LIMITED</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
+              onClick={() => handleDetectedCode('IMP-MH-158-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/MH/158/2026</span>
+                <span className="text-[10px] text-purple-400 font-sans">AK TRADE SOLUTION</span>
               </div>
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>
@@ -207,6 +243,50 @@ export const ScanPage: React.FC = () => {
               <div>
                 <span className="font-bold text-white block">IMP/GJ/157/2026</span>
                 <span className="text-[10px] text-indigo-400 font-sans">NATIONAL INSTRUMENTS SOLUTIONS</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
+              onClick={() => handleDetectedCode('IMP-MH-156-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/MH/156/2026</span>
+                <span className="text-[10px] text-rose-400 font-sans">HAMILTON INSTRUMENTS INDIA PVT LTD</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
+              onClick={() => handleDetectedCode('IMP-DL-155-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/DL/155/2026</span>
+                <span className="text-[10px] text-teal-400 font-sans">ARAGYA ENTERPRISES</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
+              onClick={() => handleDetectedCode('IMP-DL-154-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/DL/154/2026</span>
+                <span className="text-[10px] text-orange-400 font-sans">MAHI TRADING CO</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+
+            <button
+              onClick={() => handleDetectedCode('IMP-TN-153-2026')}
+              className="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 flex items-center justify-between text-xs font-mono transition"
+            >
+              <div>
+                <span className="font-bold text-white block">IMP/TN/153/2026</span>
+                <span className="text-[10px] text-emerald-400 font-sans">BRONIK INSTRUMENTS AND CONTROLS</span>
               </div>
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>

@@ -98,11 +98,14 @@ export const VerifyPage: React.FC = () => {
             </button>
           </form>
 
-          {/* All-Years Real Search Triggers */}
+          {/* Authentic Portal Search Triggers (10+ Presets) */}
           <div className="space-y-2 pt-2 border-t border-slate-100">
-            <div className="flex items-center text-xs text-slate-500 font-bold space-x-1">
-              <Calendar className="w-3.5 h-3.5 text-blue-700" />
-              <span>Multi-Year Statutory Certificate Queries:</span>
+            <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
+              <div className="flex items-center space-x-1">
+                <Calendar className="w-3.5 h-3.5 text-blue-700" />
+                <span>Statutory Importer Certificate Presets:</span>
+              </div>
+              <span className="text-[10px] bg-blue-100 text-blue-900 px-2 py-0.5 rounded font-mono">10+ Certificates</span>
             </div>
 
             <div className="flex flex-wrap gap-2 text-xs">
@@ -110,42 +113,70 @@ export const VerifyPage: React.FC = () => {
                 onClick={() => navigate('/verify/IMP-MH-162-2026')}
                 className="px-2.5 py-1 bg-amber-50 text-amber-950 border border-amber-300 rounded-lg font-mono font-bold hover:bg-amber-100 transition"
               >
-                2026 • IMP/MH/162/2026 (SUPREME INSTRUMENT)
+                IMP/MH/162/2026 (SUPREME INSTRUMENT)
               </button>
 
               <button
-                onClick={() => navigate('/verify/IMP-GJ-130-2024')}
+                onClick={() => navigate('/verify/IMP-MH-161-2026')}
                 className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
               >
-                2024 • IMP/GJ/130/2024 (DBD WATER)
+                IMP/MH/161/2026 (Industrial Electronic)
               </button>
 
               <button
-                onClick={() => navigate('/verify/IMP-WB-136-2023')}
+                onClick={() => navigate('/verify/IMP-MH-160-2026')}
                 className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
               >
-                2023 • IMP/WB/136/2023 (AQUANAUTS SEVEN)
+                IMP/MH/160/2026 (UDEYRAJ ELECTRICALS)
               </button>
 
               <button
-                onClick={() => navigate('/verify/IMP-GJ-148-2022')}
+                onClick={() => navigate('/verify/IMP-MH-159-2026')}
                 className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
               >
-                2022 • IMP/GJ/148/2022 (HAMILTON INSTRUMENTS)
+                IMP/MH/159/2026 (SENSUS METERING)
               </button>
 
               <button
-                onClick={() => navigate('/verify/IMP-TN-129-2021')}
+                onClick={() => navigate('/verify/IMP-MH-158-2026')}
                 className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
               >
-                2021 • IMP/TN/129/2021 (KANIMOZHI WEIGHING)
+                IMP/MH/158/2026 (AK TRADE SOLUTION)
               </button>
 
               <button
-                onClick={() => navigate('/verify/IMP-TS-124-2020')}
+                onClick={() => navigate('/verify/IMP-GJ-157-2026')}
                 className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
               >
-                2020 • IMP/TS/124/2020 (MARIAM ENTERPRISES)
+                IMP/GJ/157/2026 (NATIONAL INSTRUMENTS)
+              </button>
+
+              <button
+                onClick={() => navigate('/verify/IMP-MH-156-2026')}
+                className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
+              >
+                IMP/MH/156/2026 (HAMILTON INSTRUMENTS)
+              </button>
+
+              <button
+                onClick={() => navigate('/verify/IMP-DL-155-2026')}
+                className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
+              >
+                IMP/DL/155/2026 (ARAGYA ENTERPRISES)
+              </button>
+
+              <button
+                onClick={() => navigate('/verify/IMP-DL-154-2026')}
+                className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
+              >
+                IMP/DL/154/2026 (MAHI TRADING)
+              </button>
+
+              <button
+                onClick={() => navigate('/verify/IMP-TN-153-2026')}
+                className="px-2.5 py-1 bg-blue-50 text-blue-950 border border-blue-200 rounded-lg font-mono font-bold hover:bg-blue-100 transition"
+              >
+                IMP/TN/153/2026 (BRONIK INSTRUMENTS)
               </button>
 
               <Link
