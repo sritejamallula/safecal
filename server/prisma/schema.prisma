@@ -1,0 +1,42 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Instrument {
+  id                 String    @id @default(uuid())
+  verificationId     String    @unique // e.g. LM-AP-DEMO-000001
+  certificateNumber  String    @unique // e.g. CERT-DEMO-2026-000001
+  instrumentType     String
+  manufacturer       String
+  model              String
+  serialNumber       String
+  capacity           String
+  accuracyClass      String
+  ownerName          String
+  businessName       String
+  businessAddress    String
+  state              String
+  district           String
+  inspectionDate     DateTime?
+  verificationDate   DateTime?
+  validUntil         DateTime?
+  verificationStatus String    @default("PENDING") // VERIFIED, PENDING, EXPIRED, REJECTED
+  inspectorName      String?
+  inspectorId        String?
+  certificateUrl     String?
+  qrVerificationUrl  String
+  importerName       String?
+  registrationNo     String?
+  issueDateStr       String?
+  validityDateStr    String?
+  itemCategory       String?
+  sourceType         String    @default("OFFICIAL_REFERENCE") // OFFICIAL_REFERENCE, DEMO, IMPORTED_DATA
+  sourceReference    String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
