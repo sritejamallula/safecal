@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, QrCode, ShieldCheck, CheckCircle2, ArrowRight, Building2 } from 'lucide-react';
-import { IndianGovernmentEmblem } from '../common/IndianGovernmentEmblem';
 
 export const HeroSection: React.FC = () => {
   const navigate = useNavigate();
@@ -18,21 +17,21 @@ export const HeroSection: React.FC = () => {
           {/* Left Hero Text Column */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
-            {/* Government Public Service Tag */}
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200 text-xs font-semibold backdrop-blur-xs">
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span>Government of India • Ministry of Consumer Affairs • Legal Metrology Portal</span>
+            {/* Tag */}
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold backdrop-blur-xs">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>SafeCal • Legal Verification Portal</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              Statutory Importer <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-amber-200 via-white to-amber-400 bg-clip-text text-transparent font-serif">
-                Verification System
+              SafeCal Legal <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-blue-200 via-white to-emerald-300 bg-clip-text text-transparent">
+                Verification Portal
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl font-normal leading-relaxed mx-auto lg:mx-0">
-              Query authentic registration certificates and owner records for weighing & measuring instruments directly from the Directorate of Legal Metrology.
+              Instantly verify authentic statutory registration certificates and registered owner details for weighing and measuring instruments.
             </p>
 
             {/* CTAs */}
@@ -42,14 +41,14 @@ export const HeroSection: React.FC = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transform hover:-translate-y-0.5 transition duration-200"
               >
                 <Search className="w-4 h-4" />
-                <span>Search Portal Records</span>
+                <span>Verify an Instrument</span>
               </Link>
 
               <Link
                 to="/scan"
                 className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-sm backdrop-blur-xs transform hover:-translate-y-0.5 transition duration-200"
               >
-                <QrCode className="w-4 h-4 text-amber-400" />
+                <QrCode className="w-4 h-4 text-emerald-400" />
                 <span>Scan QR Code</span>
               </Link>
             </div>
@@ -57,11 +56,11 @@ export const HeroSection: React.FC = () => {
             {/* Real Search Quick Trigger */}
             <div className="pt-4 border-t border-slate-800/80 flex items-center justify-center lg:justify-start space-x-3 text-xs text-slate-400">
               <span className="font-medium text-slate-400 flex items-center">
-                <Building2 className="w-3.5 h-3.5 text-amber-400 mr-1" /> Real Portal Certificate:
+                <Building2 className="w-3.5 h-3.5 text-blue-400 mr-1" /> Quick Certificate Verification:
               </span>
               <button
                 onClick={() => navigate('/verify/IMP-MH-162-2026')}
-                className="text-amber-300 hover:text-white underline underline-offset-4 font-mono font-bold"
+                className="text-blue-300 hover:text-white underline underline-offset-4 font-mono font-bold"
               >
                 IMP/MH/162/2026
               </button>
@@ -73,22 +72,24 @@ export const HeroSection: React.FC = () => {
           <div className="lg:col-span-5">
             <div className="relative mx-auto max-w-md">
               {/* Glow Accent */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-blue-500 rounded-3xl blur-xl opacity-30 animate-pulse" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-3xl blur-xl opacity-30 animate-pulse" />
 
-              {/* Certified Instrument Badge Card Preview */}
+              {/* Certified Instrument Card Preview */}
               <div className="relative bg-white text-slate-900 rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4">
                 
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div className="flex items-center space-x-2.5">
-                    <IndianGovernmentEmblem size={36} showText={false} />
+                    <div className="w-8 h-8 rounded-lg bg-blue-900 flex items-center justify-center text-white font-black text-sm">
+                      S
+                    </div>
                     <div>
-                      <h4 className="text-xs font-black text-slate-900 font-serif">Certificate of Registration</h4>
-                      <p className="text-[10px] font-bold text-slate-500">Government of India • Legal Metrology</p>
+                      <h4 className="text-xs font-black text-slate-900">SafeCal Certificate</h4>
+                      <p className="text-[10px] font-bold text-slate-500">Legal Verification</p>
                     </div>
                   </div>
                   <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-[11px] font-black flex items-center">
                     <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-emerald-600" />
-                    REGISTERED
+                    VERIFIED
                   </span>
                 </div>
 
@@ -114,19 +115,19 @@ export const HeroSection: React.FC = () => {
                     <span className="font-bold text-right text-slate-800">Weighing & Measuring Devices</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Statutory Validity:</span>
-                    <span className="font-black text-amber-950">15/09/2031</span>
+                    <span className="text-slate-500">Validity Date:</span>
+                    <span className="font-black text-emerald-700">15/09/2031</span>
                   </div>
                 </div>
 
                 {/* QR Code preview block */}
-                <div className="bg-amber-50/60 rounded-xl p-3 border border-amber-200/60 flex items-center justify-between">
+                <div className="bg-blue-50/70 rounded-xl p-3 border border-blue-100 flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <span className="text-[10px] font-bold text-amber-950 uppercase tracking-wider block">Authentic Portal Seal</span>
-                    <p className="text-[11px] text-amber-900 font-medium">Scan QR code seal to query the official record.</p>
+                    <span className="text-[10px] font-bold text-blue-900 uppercase tracking-wider block">Tamper-Evident QR Badge</span>
+                    <p className="text-[11px] text-blue-800 font-medium">Scan QR code seal to verify authentic record.</p>
                   </div>
-                  <div className="w-12 h-12 bg-white p-1 rounded-lg border border-amber-300 shrink-0 flex items-center justify-center">
-                    <QrCode className="w-full h-full text-amber-950" />
+                  <div className="w-12 h-12 bg-white p-1 rounded-lg border border-blue-200 shrink-0 flex items-center justify-center">
+                    <QrCode className="w-full h-full text-blue-900" />
                   </div>
                 </div>
 

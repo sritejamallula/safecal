@@ -62,15 +62,15 @@ export const VerifyPage: React.FC = () => {
         
         {/* Top Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-100/80 text-amber-950 text-xs font-bold border border-amber-300">
-            <ShieldCheck className="w-4 h-4 text-amber-800" />
-            <span>Government of India • Department of Consumer Affairs</span>
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-950 text-xs font-bold border border-blue-300">
+            <ShieldCheck className="w-4 h-4 text-blue-800" />
+            <span>SafeCal • Legal Verification Portal</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            National Legal Metrology Verification Portal
+            Legal Verification Search Portal
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto">
-            Search authentic statutory certificates and registered owner details across all years (2020–2026) issued by the Directorate of Legal Metrology.
+            Search authentic statutory certificates and registered owner details across all years (2020–2026) issued by the Legal Metrology authority.
           </p>
         </div>
 

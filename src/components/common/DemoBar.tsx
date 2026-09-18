@@ -21,7 +21,7 @@ export const DemoBar: React.FC = () => {
       <div className="flex items-center space-x-2">
         <span className="inline-flex items-center px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-900/60 text-blue-200 border border-blue-700/50">
           <ShieldCheck className="w-3.5 h-3.5 mr-1 text-emerald-400" />
-          GOVERNMENT OF INDIA • MINISTRY OF CONSUMER AFFAIRS • LEGAL METROLOGY PORTAL
+          SAFECAL • LEGAL METROLOGY VERIFICATION PORTAL
         </span>
       </div>
 

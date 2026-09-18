@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Scale } from 'lucide-react';
-import { IndianGovernmentEmblem } from './IndianGovernmentEmblem';
 
 export const Footer: React.FC = () => {
   return (
@@ -11,12 +10,14 @@ export const Footer: React.FC = () => {
           
           {/* Brand Column */}
           <div className="md:col-span-1 space-y-3">
-            <div className="flex items-center space-x-3">
-              <IndianGovernmentEmblem size={36} showText={false} />
-              <span className="font-bold text-white text-base font-serif">Legal Metrology Portal</span>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
+                S
+              </div>
+              <span className="font-extrabold text-white text-lg tracking-tight">SafeCal</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
-              Official Verification Portal for Weighing and Measuring Instruments certified under the Legal Metrology Act, 2009.
+              SafeCal Statutory Verification Portal for Weighing and Measuring Instruments certified under Legal Metrology Regulations.
             </p>
             <div className="flex items-center space-x-2 text-emerald-400 font-medium text-[11px]">
               <ShieldCheck className="w-4 h-4" />
@@ -67,12 +68,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/login" className="hover:text-blue-400 transition">
-                  Legal Metrology Officer Portal
+                  Legal Metrology Inspector Portal
                 </Link>
               </li>
               <li>
                 <Link to="/login" className="hover:text-blue-400 transition">
-                  Controller Admin Panel
+                  Admin Panel
                 </Link>
               </li>
             </ul>
@@ -80,11 +81,11 @@ export const Footer: React.FC = () => {
 
           {/* Statutory Acts */}
           <div>
-            <h4 className="font-semibold text-white uppercase tracking-wider text-[11px] mb-3">Statutory Acts & Rules</h4>
+            <h4 className="font-semibold text-white uppercase tracking-wider text-[11px] mb-3">Statutory Regulations</h4>
             <ul className="space-y-2 text-slate-400 text-[11px]">
               <li className="flex items-center">
                 <Scale className="w-3.5 h-3.5 mr-1 text-slate-500" />
-                <span>The Legal Metrology Act, 2009 (No. 1 of 2010)</span>
+                <span>The Legal Metrology Act, 2009</span>
               </li>
               <li className="flex items-center">
                 <Scale className="w-3.5 h-3.5 mr-1 text-slate-500" />
@@ -101,7 +102,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright line */}
         <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-slate-500 text-[11px]">
-          <p>© 2026 Department of Consumer Affairs, Legal Metrology Division, Government of India. All rights reserved.</p>
+          <p>© 2026 SafeCal Legal Verification Portal. All rights reserved.</p>
           <div className="flex space-x-4 mt-2 sm:mt-0">
             <span>Privacy Policy</span>
             <span>Terms of Service</span>

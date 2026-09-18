@@ -14,22 +14,25 @@ export const getVerificationById = async (req, res) => {
       });
     }
 
-    // Convert hyphens to slashes for certificate lookup (e.g. IMP-MH-162-2026 -> IMP/MH/162/2026)
+    // Convert variations of slashes and hyphens for certificate/ID lookups
     const slashVersion = cleanId.replace(/-/g, '/');
     const hyphenVersion = cleanId.replace(/\//g, '-');
 
     const instrument = await prisma.instrument.findFirst({
       where: {
         OR: [
-          { verificationId: { equals: cleanId } },
-          { verificationId: { equals: hyphenVersion } },
-          { certificateNumber: { equals: cleanId } },
-          { certificateNumber: { equals: slashVersion } },
-          { registrationNo: { equals: cleanId } },
+          { verificationId: { contains: cleanId } },
+          { verificationId: { contains: hyphenVersion } },
+          { verificationId: { contains: slashVersion } },
+          { certificateNumber: { contains: cleanId } },
+          { certificateNumber: { contains: slashVersion } },
+          { certificateNumber: { contains: hyphenVersion } },
+          { registrationNo: { contains: cleanId } },
           { importerName: { contains: cleanId } },
           { ownerName: { contains: cleanId } },
-          { serialNumber: { equals: cleanId } },
-          { id: { equals: cleanId } }
+          { businessName: { contains: cleanId } },
+          { serialNumber: { contains: cleanId } },
+          { id: { contains: cleanId } }
         ]
       }
     });
@@ -67,10 +70,12 @@ export const getVerificationByCertificate = async (req, res) => {
     const instrument = await prisma.instrument.findFirst({
       where: {
         OR: [
-          { certificateNumber: { equals: cleanCert } },
-          { certificateNumber: { equals: slashVersion } },
-          { verificationId: { equals: hyphenVersion } },
-          { verificationId: { equals: cleanCert } }
+          { certificateNumber: { contains: cleanCert } },
+          { certificateNumber: { contains: slashVersion } },
+          { certificateNumber: { contains: hyphenVersion } },
+          { verificationId: { contains: hyphenVersion } },
+          { verificationId: { contains: slashVersion } },
+          { verificationId: { contains: cleanCert } }
         ]
       }
     });
